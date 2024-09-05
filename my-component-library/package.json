@@ -1,0 +1,41 @@
+{
+  "name": "my-component-library",
+  "version": "0.1.2",
+  "scripts": {
+    "clean": "rm -rf ./dist; rm -rf my-component-library-0.1.2.tgz; rm -rf ../my-component-library-0.1.2.tgz",
+    "build-types": "vue-tsc --declaration --emitDeclarationOnly --outDir ./dist",
+    "build-lib": "vite build",
+    "build": "npm run clean && npm run build-lib && npm run build-types",
+    "pack": "npm pack; mv my-component-library-0.1.2.tgz ../my-component-library-0.1.2.tgz",
+    "all": "npm run build && npm run pack",
+    "preversion": "npm run clean",
+    "version": "npm run build",
+    "postversion": "npm run pack",
+    "version-patch": "npm version patch -m \"Patch version\""
+  },
+  "files": [
+    "dist"
+  ],
+  "types": "./dist/src/index.d.ts",
+  "main": "./dist/my-component-lib.umd.js",
+  "module": "./dist/my-component-lib.es.js",
+
+  "exports": {
+    ".": {
+      "import": [
+        "./dist/my-component-lib.es.js"
+      ],
+      "require": "./dist/my-component-lib.umd.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "devDependencies": {
+    "@babel/types": "^7.24.9",
+    "@types/node": "^20.14.11",
+    "@vitejs/plugin-vue": "^5.0.5",
+    "typescript": "^5.5.3",
+    "vite": "^5.3.4",
+    "vue": "^3.4.33",
+    "vue-tsc": "^2.0.26"
+  }
+}
